@@ -3,10 +3,6 @@
 ## Евдоковец Андрей, 253505
 ФКСиС ИиТП, 2024г.
 
-# News Website Database Design
-
-This project outlines the structure and relationships of a news website, where users can write articles, leave comments, like content, and more.
-
 # Функциональные возможности проекта
 
 Проект представляет собой новостной сайт с возможностью взаимодействия пользователей с контентом. Основные функциональные возможности включают:
@@ -45,6 +41,7 @@ This project outlines the structure and relationships of a news website, where u
 ## 8. Управление пользователями и модерация
 - **Модераторы** могут редактировать или удалять комментарии для поддержания порядка.
 - Пользователи могут быть обычными пользователемя, авторами, а также модераторами для управления контентом.
+- Журналирование действий пользователей
 
 
 ## Сущности и описание их полей
@@ -193,3 +190,5 @@ This project outlines the structure and relationships of a news website, where u
   - `created_at` (DATE)
 - **Relationships**:
   - Many-to-One with `User`: One user commits many actions.
+ 
+![Схема БД](mdsubd1.drawio.png)
