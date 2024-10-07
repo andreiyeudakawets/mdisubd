@@ -44,7 +44,7 @@ This project outlines the structure and relationships of a news website, where u
 
 ## 8. Управление пользователями и модерация
 - **Модераторы** могут редактировать или удалять комментарии для поддержания порядка.
-- Пользователи могут быть назначены модераторами для управления контентом.
+- Пользователи могут быть обычными пользователемя, авторами, а также модераторами для управления контентом.
 
 
 ## Сущности и описание их полей
@@ -183,4 +183,13 @@ This project outlines the structure and relationships of a news website, where u
   - `user_id` (FK): Идентификатор пользователя, назначенного модера
 - **Relationships**:
   - One-to-One with `User`: One moderator is one user.
-
+    
+### 13. **Action (Действие)**
+- **Attributes**:
+  - `action_id` (PK): Уникальный идентификатор.
+  - `user_id` (FK): Идентификатор пользователя, который совершает действие
+  - `target_id` (FK): Идентификатор статьи/комментария
+  - `description` (VARCHAR): Описание действия
+  - `created_at` (DATE)
+- **Relationships**:
+  - Many-to-One with `User`: One user commits many actions.
