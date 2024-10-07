@@ -11,12 +11,12 @@ This project outlines the structure and relationships of a news website, where u
 
 ### 1. **User (Пользователь)**
 - **Attributes**:
-  - `user_id` (PK): Unique identifier.
-  - `username` (VARCHAR, unique): Username.
-  - `email` (VARCHAR, unique): Email address.
-  - `password_hash` (VARCHAR): Password hash.
-  - `is_author` (BOOLEAN): Flag indicating if the user is an author.
-  - `registration_date` (DATE): Registration date.
+   - `user_id` (PK): Уникальный идентификатор пользователя.
+  - `username` (VARCHAR, уникальный): Имя пользователя.
+  - `email` (VARCHAR, уникальный): Адрес электронной почты пользователя.
+  - `password_hash` (VARCHAR): Хэш пароля.
+  - `is_author` (BOOLEAN): Флаг, указывающий, является ли пользователь автором.
+  - `registration_date` (DATE): Дата регистрации пользователя.
 - **Relationships**:
   - One-to-Many with `Article`: One user can write many articles.
   - One-to-Many with `Comment`: One user can post many comments.
@@ -30,13 +30,13 @@ This project outlines the structure and relationships of a news website, where u
 
 ### 2. **Article (Статья)**
 - **Attributes**:
-  - `article_id` (PK): Unique identifier.
-  - `title` (VARCHAR): Title of the article.
-  - `content` (TEXT): Article content.
-  - `publication_date` (DATE): Date of publication.
-  - `author_id` (FK): Reference to `User` (author).
-  - `category_id` (FK): Reference to `Category`.
-  - `views` (INT): Number of views.
+  - `article_id` (PK): Уникальный идентификатор статьи.
+  - `title` (VARCHAR): Заголовок статьи.
+  - `content` (TEXT): Содержание статьи.
+  - `publication_date` (DATE): Дата публикации статьи.
+  - `author_id` (FK): Идентификатор автора (ссылка на `User`).
+  - `category_id` (FK): Идентификатор категории статьи (ссылка на `Category`).
+  - `views` (INT): Количество просмотров статьи.
 - **Relationships**:
   - Many-to-One with `User`: One article is written by one author.
   - One-to-Many with `Comment`: One article can have many comments.
@@ -46,11 +46,11 @@ This project outlines the structure and relationships of a news website, where u
 
 ### 3. **Comment (Комментарий)**
 - **Attributes**:
-  - `comment_id` (PK): Unique identifier.
-  - `content` (TEXT): Comment content.
-  - `created_at` (DATE): Date of comment creation.
-  - `article_id` (FK): Reference to `Article`.
-  - `user_id` (FK): Reference to `User`.
+  - `comment_id` (PK): Уникальный идентификатор комментария.
+  - `content` (TEXT): Текст комментария.
+  - `created_at` (DATE): Дата создания комментария.
+  - `article_id` (FK): Идентификатор статьи, к которой относится комментарий (ссылка на `Article`).
+  - `user_id` (FK): Идентификатор пользователя, оставившего комментарий (ссылка на `User`).
 - **Relationships**:
   - Many-to-One with `Article`: One comment belongs to one article.
   - Many-to-One with `User`: One comment belongs to one user.
@@ -58,82 +58,89 @@ This project outlines the structure and relationships of a news website, where u
 
 ### 4. **Like (Лайк)**
 - **Attributes**:
-  - `like_id` (PK): Unique identifier.
-  - `user_id` (FK): Reference to `User`.
-  - `article_id` (FK): Reference to `Article`.
+  - `like_id` (PK): Уникальный идентификатор лайка.
+  - `user_id` (FK): Идентификатор пользователя, поставившего лайк (ссылка на `User`).
+  - `article_id` (FK): Идентификатор статьи, получившей лайк (ссылка на `Article`).
 - **Relationships**:
   - Many-to-One with `User`: One like is given by one user.
   - Many-to-One with `Article`: One like belongs to one article.
 
 ### 5. **Category (Категория)**
 - **Attributes**:
-  - `category_id` (PK): Unique identifier.
-  - `name` (VARCHAR): Category name.
-  - `description` (TEXT): Description of the category.
+  - `category_id` (PK): Уникальный идентификатор категории.
+  - `name` (VARCHAR): Название категории.
+  - `description` (TEXT): Описание категории.
 - **Relationships**:
   - One-to-Many with `Article`: One category can include many articles.
   - One-to-Many with `Category_Subscription`: One category can have many subscribers.
+
+### **Article_Tag (Связь Статья-Тег)**
+- **Attributes**:
+  - `article_id` (FK): Идентификатор статьи (ссылка на `Article`).
+  - `tag_id` (FK): Идентификатор тега (ссылка на `Tag`).
+- **Rels**:
+  - Одна статья может иметь множество тегов.
+  - Один тег может быть присвоен множеству статей.
 
 ### 6. **Tag (Тег)**
 - **Attributes**:
   - `tag_id` (PK): Unique identifier.
   - `name` (VARCHAR): Tag name.
 - **Relationships**:
-  - Many-to-Many with `Article`: One tag can be assigned to many articles.
+  - Many-to-Many with `Article`:  Один тег может быть присвоен множеству статей через сущность `Article_Tag`. 
 
 ### 7. **Bookmark (Закладка)**
 - **Attributes**:
-  - `bookmark_id` (PK): Unique identifier.
-  - `user_id` (FK): Reference to `User`.
-  - `article_id` (FK): Reference to `Article`.
-  - `created_at` (TIMESTAMP): Timestamp when the article was bookmarked.
+  - `bookmark_id` (PK): Уникальный идентификатор закладки.
+  - `user_id` (FK): Идентификатор пользователя, добавившего статью в закладки (ссылка на `User`).
+  - `article_id` (FK): Идентификатор статьи, добавленной в закладки (ссылка на `Article`).
+  - `created_at` (TIMESTAMP): Дата и время, когда статья была добавлена в закладки.
 - **Relationships**:
   - Many-to-One with `User`: One bookmark belongs to one user.
   - Many-to-One with `Article`: One bookmark belongs to one article.
 
 ### 8. **Subscription (Подписка на автора)**
 - **Attributes**:
-  - `subscription_id` (PK): Unique identifier.
-  - `subscriber_id` (FK): Reference to `User` (subscriber).
-  - `author_id` (FK): Reference to `User` (author).
-  - `subscription_date` (DATE): Date of subscription.
+  - `subscription_id` (PK): Уникальный идентификатор подписки.
+  - `subscriber_id` (FK): Идентификатор подписчика (ссылка на `User`).
+  - `author_id` (FK): Идентификатор автора, на которого подписан пользователь (ссылка на `User`).
+  - `subscription_date` (DATE): Дата подписки.
 - **Relationships**:
   - Many-to-One with `User`: One subscription belongs to one user and one author.
 
 ### 9. **Notification (Уведомление)**
 - **Attributes**:
-  - `notification_id` (PK): Unique identifier.
-  - `content` (TEXT): Notification content (e.g., "New article from Author X").
-  - `user_id` (FK): Reference to `User`.
-  - `created_at` (DATE): Date of notification creation.
-  - `is_read` (BOOLEAN): Flag indicating whether the notification has been read.
+  - `notification_id` (PK): Уникальный идентификатор уведомления.
+  - `content` (TEXT): Текст уведомления (например, "Новая статья от автора X").
+  - `user_id` (FK): Идентификатор пользователя, который получает уведомление (ссылка на `User`).
+  - `created_at` (DATE): Дата создания уведомления.
+  - `is_read` (BOOLEAN): Флаг, указывающий, было ли прочитано уведомление.
 - **Relationships**:
   - Many-to-One with `User`: One notification belongs to one user.
 
 ### 10. **Category_Subscription (Подписка на категорию)**
 - **Attributes**:
-  - `subscription_id` (PK): Unique identifier.
-  - `user_id` (FK): Reference to `User`.
-  - `category_id` (FK): Reference to `Category`.
-  - `subscription_date` (DATE): Date of subscription.
+  - `subscription_id` (PK): Уникальный идентификатор подписки на категорию.
+  - `user_id` (FK): Идентификатор пользователя (ссылка на `User`).
+  - `category_id` (FK): Идентификатор категории (ссылка на `Category`).
+  - `subscription_date` (DATE): Дата подписки.
 - **Relationships**:
   - Many-to-One with `User`: One category subscription belongs to one user.
   - Many-to-One with `Category`: One category subscription belongs to one category.
 
 ### 11. **Comment_Like (Лайк Комментария)**
 - **Attributes**:
-  - `comment_like_id` (PK): Unique identifier.
-  - `comment_id` (FK): Reference to `Comment`.
-  - `user_id` (FK): Reference to `User`.
+  - `comment_like_id` (PK): Уникальный идентификатор лайка комментария.
+  - `comment_id` (FK): Идентификатор комментария (ссылка на `Comment`).
+  - `user_id` (FK): Идентификатор пользователя, поставившего лайк (ссылка на `User`).
 - **Relationships**:
   - Many-to-One with `Comment`: One comment like belongs to one comment.
   - Many-to-One with `User`: One comment like belongs to one user.
 
 ### 12. **Moderator (Модератор)**
 - **Attributes**:
-  - `moderator_id` (PK): Unique identifier.
-  - `user_id` (FK): Reference to `User`.
-  - `assigned_date` (DATE): Date of moderator assignment.
+  - `moderator_id` (PK): Уникальный идентификатор модератора.
+  - `user_id` (FK): Идентификатор пользователя, назначенного модера
 - **Relationships**:
   - One-to-One with `User`: One moderator is one user.
 
